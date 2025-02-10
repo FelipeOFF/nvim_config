@@ -35,7 +35,6 @@ Plug 'morhetz/gruvbox'
 Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 
 " Vim Flutter
-Plug 'dart-lang/dart-vim-plugin'
 Plug 'thosakwe/vim-flutter'
 
 " Deople for Nvim
@@ -43,5 +42,8 @@ Plug 'thosakwe/vim-flutter'
 
 " Comrade for JetBrains IDE integration
 " Plug 'beeender/Comrade'
+
+" Copilot
+Plug 'github/copilot'
 
 call plug#end()
