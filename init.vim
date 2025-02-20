@@ -19,7 +19,10 @@ set colorcolumn=120
 set clipboard=unnamedplus
 set backspace=indent,eol,start
 set relativenumber
+set modifiable
 highlight ColorColumn ctermbg=0 guibg=lightgrey
+
+let NERDTreeShowHidden=1
 
 let mapleader=" "
 nnoremap <leader>fe :CocCommand flutter.emulators <CR>
@@ -45,6 +48,9 @@ nmap <silent> gr <Plug>(coc-references)
 " Symbol renaming.
 nmap <leader>rn <Plug>(coc-rename)
 
+" Formatting selected code.
+"lua require("flutter-tools").setup {} -- use defaults
+
 " Use K to show documentation in preview window
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 function! s:show_documentation()
@@ -63,14 +69,6 @@ nmap <leader>gs :G<CR>
 nmap <leader>gh :diffget //2<CR>
 nmap <leader>gl :diffget //3<CR>
 
-" Some of these key choices were arbitrary;
-" it's just an example.
-nnoremap <leader>fa :FlutterRun<cr>
-nnoremap <leader>fq :FlutterQuit<cr>
-nnoremap <leader>fr :FlutterHotReload<cr>
-nnoremap <leader>fR :FlutterHotRestart<cr>
-nnoremap <leader>fD :FlutterVisualDebug<cr>
-
 imap <tab> <Plug>(coc-snippets-expand)
 let g:UltiSnipsExpandTrigger = '<Nop>'
 let g:coc_snippet_next = '<TAB>'
@@ -79,6 +77,41 @@ let g:coc_snippet_prev = '<S-TAB>'
 inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+" Before config
+" Jump to previous entry in the edit history
+nnoremap <C-h> <cmd>lua require('before').jump_to_last_edit()<CR>
+" Jump to next entry in the edit history
+nnoremap <C-l> <cmd>lua require('before').jump_to_next_edit()<CR>
+" Look for previous edits in quickfix list
+nnoremap <leader>oq <cmd>lua require('before').show_edits_in_quickfix()<CR>
+" Look for previous edits in telescope
+nnoremap <leader>oe <cmd>lua require('before').show_edits_in_telescope()<CR>
+
+" setup mapping to call :LazyGit
+nnoremap <silent> <leader>gg :LazyGit<CR>
+
+" Load the telescope extension
+lua require('telescope').load_extension('before')
+lua require('telescope').load_extension('lazygit')
+lua require("telescope").load_extension("flutter")
+lua require('telescope').load_extension('fzf')
+
+lua require('telescope').setup { extensions = { fzf = {fuzzy = true,override_generic_sorter = true, override_file_sorter = true, case_mode = "smart_case",}}}
+
+" Find files using Telescope command-line sugar.
+"nnoremap <leader>ff <cmd>Telescope find_files<cr>
+"nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+"nnoremap <leader>fb <cmd>Telescope buffers<cr>
+"nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+
+" Using Lua functions
+nnoremap <leader>ff <cmd>lua require('telescope.builtin').find_files()<cr>
+nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep{shorten_path = true, word_match = "-w", only_sort_text = true, search = 'Ag'}<cr>
+nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<cr>
+nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
+nnoremap <leader>fl <cmd>lua require('telescope').extensions.lazygit.lazygit()<cr>
+nnoremap <leader>fu <cmd>lua require('telescope').extensions.flutter.commands()<cr>
 
 " Use <c-space> to trigger completion.
 if has('nvim')
@@ -108,6 +141,7 @@ let g:coc_global_extensions = [
   \ 'coc-css',
   \ 'coc-html',
   \ 'coc-json',
+	\ 'coc-git',
   \ ]
 
 let g:NERDTreeGitStatusWithFlags = 1

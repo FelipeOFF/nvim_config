@@ -37,13 +37,37 @@ Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 " Vim Flutter
 Plug 'thosakwe/vim-flutter'
 
+Plug 'nvim-lua/plenary.nvim'
+Plug 'stevearc/dressing.nvim' " optional for vim.ui.select
+Plug 'nvim-flutter/flutter-tools.nvim'
+
 " Deople for Nvim
 " Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 
 " Comrade for JetBrains IDE integration
 " Plug 'beeender/Comrade'
 
-" Copilot
-Plug 'github/copilot'
+" This is a telescope plugin
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.8' }
+" This is a plugin for telescope-fzf-native
+Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
+" This is a plugin for telescope-media-files
+Plug 'nvim-lua/plenary.nvim'
+
+" This is a plugin for before.nvim
+Plug 'bloznelis/before.nvim'
+
+" This is a plugin for vim-floaterm
+Plug 'voldikss/vim-floaterm'
+
+" This is a plugin for lazygit
+Plug 'kdheepak/lazygit.nvim'
+
+" This is a plugin for gitsigns
+Plug 'lewis6991/gitsigns.nvim'
+
+" This is a plugin for trouble
+Plug 'folke/trouble.nvim'
 
 call plug#end()
