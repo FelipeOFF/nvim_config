@@ -26,7 +26,7 @@ let NERDTreeShowHidden=1
 
 let mapleader=" "
 nnoremap <leader>fe :CocCommand flutter.emulators <CR>
-nnoremap <leader>fd :below new output:///flutter-dev <CR>
+"nnoremap <leader>fd :below new output:///flutter-dev <CR>
 map <leader>h :wincmd h <CR>
 map <leader>j :wincmd j <CR>
 map <leader>k :wincmd k <CR>
@@ -44,12 +44,14 @@ nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
+nmap <silent> <leader>ca <Plug>(coc-codeaction)
+nmap <silent> <leader>qf <Plug>(coc-fix-current)
+nmap <silent> <leader>rn <Plug>(coc-rename)
+nmap <silent> <leader>cd <Plug>(coc-diagnostic-next)
+nmap <silent> <leader>cp <Plug>(coc-diagnostic-prev)
 
 " Symbol renaming.
 nmap <leader>rn <Plug>(coc-rename)
-
-" Formatting selected code.
-"lua require("flutter-tools").setup {} -- use defaults
 
 " Use K to show documentation in preview window
 nnoremap <silent> K :call <SID>show_documentation()<CR>
@@ -113,6 +115,9 @@ nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
 nnoremap <leader>fl <cmd>lua require('telescope').extensions.lazygit.lazygit()<cr>
 nnoremap <leader>fu <cmd>lua require('telescope').extensions.flutter.commands()<cr>
 
+" Dart Format
+nnoremap <leader>fd :DartFmt<CR>
+
 " Use <c-space> to trigger completion.
 if has('nvim')
   inoremap <silent><expr> <c-space> coc#refresh()
@@ -152,3 +157,33 @@ let g:NERDTreeGitStatusWithFlags = 1
 au BufNewFile,BufRead *.ts setlocal filetype=typescript
 au BufNewFile,BufRead *.tsx setlocal filetype=typescript.tsx
 " == AUTOCMD END ================================
+
+" Neo Test
+
+nnoremap <leader>tn :lua require("neotest").test_file()<CR>
+nnoremap <leader>ts :lua require("neotest").test_suite()<CR>
+nnoremap <leader>tl :lua require("neotest").test_last()<CR>
+nnoremap <leader>tf :lua require("neotest").test_function()<CR>
+nnoremap <leader>tc :lua require("neotest").test_clear()<CR>
+
+lua << EOF
+local device_id = vim.g.flutter_device_id
+require("neotest").setup({
+  adapters = {
+    require("neotest-dart")({
+      command = "flutter",
+      extra_args = { "-d macOS" },
+      use_lsp = true,
+    }),
+  },
+  log_level = vim.log.levels.DEBUG,
+  timeout = 30000,
+  output = {
+    open_on_run = true,
+  },
+})
+EOF
+
+lua << EOF
+  require("flutter-tools").setup {} -- use defaults
+EOF

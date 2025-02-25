@@ -70,4 +70,11 @@ Plug 'lewis6991/gitsigns.nvim'
 " This is a plugin for trouble
 Plug 'folke/trouble.nvim'
 
+Plug 'nvim-lua/plenary.nvim'
+Plug 'antoinemadec/FixCursorHold.nvim'
+Plug 'nvim-treesitter/nvim-treesitter'
+Plug 'nvim-neotest/nvim-nio'
+Plug 'nvim-neotest/neotest'
+Plug 'sidlatau/neotest-dart'
+
 call plug#end()
