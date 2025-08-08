@@ -5,6 +5,7 @@ Plugin.branch = '0.1.x'
 Plugin.dependencies = {
   {'nvim-lua/plenary.nvim'},
   {'nvim-telescope/telescope-fzf-native.nvim', build = 'make'},
+  {'radyz/telescope-gitsigns'},
 }
 
 Plugin.cmd = {'Telescope'}
@@ -17,10 +18,21 @@ function Plugin.init()
   vim.keymap.set('n', '<leader>fg', '<cmd>Telescope live_grep<cr>')
   vim.keymap.set('n', '<leader>fd', '<cmd>Telescope diagnostics<cr>')
   vim.keymap.set('n', '<leader>fs', '<cmd>Telescope current_buffer_fuzzy_find<cr>')
+	vim.keymap.set('v', '<leader>f', [[y:lua require('telescope.builtin').live_grep({ default_text = vim.fn.getreg('\"') })<CR>]], { noremap = true, silent = true })
+
+  -- Flutter commands
+	vim.keymap.set('n', '<leader>fc', "<cmd>Telescope flutter commands<cr>", { desc = "Flutter: Commands" })
+  vim.keymap.set('n', '<leader>fdv', "<cmd>Telescope flutter devices<cr>", { desc = "Flutter: Devices" })
+  vim.keymap.set('n', '<leader>fe', "<cmd>Telescope flutter emulators<cr>", { desc = "Flutter: Emulators" })
+  vim.keymap.set('n', '<leader>ffv', "<cmd>Telescope flutter fvm<cr>", { desc = "Flutter: FVM SDKs" })
+
+  vim.keymap.set('n', '<leader>gs', "<cmd>Telescope git_status<cr>", { desc = "Show changed files" })
 end
 
 function Plugin.config()
   require('telescope').load_extension('fzf')
+  require('telescope').load_extension('flutter')
+  require('telescope').load_extension('git_signs')
 end
 
 return Plugin

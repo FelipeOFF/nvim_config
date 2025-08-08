@@ -11,4 +11,8 @@ vim.opt.expandtab = false
 vim.opt.signcolumn = 'yes'
 
 vim.opt.termguicolors = true
-
+vim.opt.relativenumber = true
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+vim.o.exrc = true
+vim.o.secure = true

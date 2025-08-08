@@ -8,6 +8,7 @@ Plugin.opts = {
   on_attach = function(bufnr)
     local bufmap = function(lhs, rhs, desc)
       vim.keymap.set('n', lhs, rhs, {buffer = bufnr, desc = desc})
+			vim.keymap.set('n', '<leader>r', ':NvimTreeFindFile<CR>', { desc = "Reveal file in NvimTree" })
     end
 
     -- :help nvim-tree.api
@@ -24,6 +25,11 @@ Plugin.opts = {
 
 function Plugin.init()
   vim.keymap.set('n', '<leader>e', '<cmd>NvimTreeToggle<cr>')
+  vim.api.nvim_create_autocmd("VimEnter", {
+    callback = function()
+      require("nvim-tree.api").tree.open()
+    end,
+  })
 end
 
 return Plugin
