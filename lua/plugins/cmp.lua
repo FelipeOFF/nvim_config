@@ -88,7 +88,12 @@ function Plugin.config()
 
       ['<Tab>'] = cmp.mapping(function(fallback)
         local col = vim.fn.col('.') - 1
+				local copilot = vim.fn['copilot#IsSuggesting']
 
+				if copilot == 1 then
+					vim.fn['copilot#Accept']()
+					return
+				end
         if cmp.visible() then
           cmp.select_next_item(select_opts)
         elseif col == 0 or vim.fn.getline('.'):sub(col, col):match('%s') then
