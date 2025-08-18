@@ -90,17 +90,16 @@ function Plugin.config()
         local col = vim.fn.col('.') - 1
 				local copilot = vim.fn['copilot#IsSuggesting']
 
-				if copilot == 1 then
-					vim.fn['copilot#Accept']()
-					return
-				end
-        if cmp.visible() then
-          cmp.select_next_item(select_opts)
-        elseif col == 0 or vim.fn.getline('.'):sub(col, col):match('%s') then
-          fallback()
-        else
-          cmp.complete()
-        end
+				-- if copilot == 1 then
+				vim.fn['copilot#Accept']()
+				-- end
+        -- if cmp.visible() then
+        --   cmp.select_next_item(select_opts)
+        -- elseif col == 0 or vim.fn.getline('.'):sub(col, col):match('%s') then
+        --   fallback()
+        -- else
+        --   cmp.complete()
+        -- end
       end, {'i', 's'}),
 
       ['<S-Tab>'] = cmp.mapping(function(fallback)
