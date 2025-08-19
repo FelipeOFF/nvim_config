@@ -87,20 +87,21 @@ function Plugin.config()
       end, {'i', 's'}),
 
 			['<Tab>'] = cmp.mapping(function(fallback)
-			  local col = vim.fn.col('.') - 1
 			  local copilot = vim.fn['copilot#IsSuggesting']
-			  local line = vim.api.nvim_get_current_line()
-			
 			  -- Accept Copilot suggestion if available
 			  if copilot == 1 then
 			    pcall(vim.fn['copilot#Accept'])
-			  -- If completion menu is visible, select next item
-			  elseif cmp.visible() then
+			  else
+			    fallback()
+			  end
+			end, {'i', 's'}),
+			['<C-Space>'] = cmp.mapping(function(fallback)
+			  local col = vim.fn.col('.') - 1
+			  local line = vim.api.nvim_get_current_line()
+			  if cmp.visible() then
 			    cmp.select_next_item(select_opts)
-			  -- If at line start or on whitespace, fallback
 			  elseif col == 0 or line:sub(col, col):match('%s') then
 			    fallback()
-			  -- Otherwise, trigger completion
 			  else
 			    cmp.complete()
 			  end
